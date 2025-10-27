@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LV Glamour Aesthetic Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Montserrat:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#EC4899", // A vibrant pink from the image
+            "background-light": "#FFF5F7", // A very light pink blush
+            "background-dark": "#1F1F1F", // A deep, almost black
+          },
+          fontFamily: {
+            display: ["Playfair Display", "serif"],
+            body: ["Montserrat", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "1rem",
+            xl: "1.5rem",
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .text-glow {
+      text-shadow: 0 0 8px rgba(236, 72, 153, 0.6), 0 0 20px rgba(236, 72, 153, 0.4);
+    }
+    .letter {
+      display: inline-block;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(50px) rotateX(90deg);
+    }
+    .letter.visible {
+      opacity: 1 !important;
+      transform: translateY(0) rotateX(0);
+    }
+    #website-loader {
+      backdrop-filter: blur(10px);
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .slide-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .slide-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .slide-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .slide-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-zinc-800 dark:text-zinc-200 antialiased">
+<!-- Website Loader -->
+<div id="website-loader" class="fixed inset-0 bg-gradient-to-br from-primary/20 to-background-light dark:to-background-dark z-[10000] flex items-center justify-center p-4">
+<div class="text-center w-full max-w-4xl">
+<div id="loader-text" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold text-primary mb-4 sm:mb-6">
+<span class="letter opacity-0">L</span>
+<span class="letter opacity-0">V</span>
+<span class="letter opacity-0 mx-2 sm:mx-3 md:mx-4"> </span>
+<span class="letter opacity-0">G</span>
+<span class="letter opacity-0">l</span>
+<span class="letter opacity-0">a</span>
+<span class="letter opacity-0">m</span>
+<span class="letter opacity-0">o</span>
+<span class="letter opacity-0">u</span>
+<span class="letter opacity-0">r</span>
+</div>
+<div class="w-24 sm:w-28 md:w-32 lg:w-36 h-1 bg-zinc-200 dark:bg-zinc-700 rounded-full mx-auto overflow-hidden">
+<div id="loader-progress" class="h-full bg-primary rounded-full w-0 transition-all duration-300"></div>
+</div>
+</div>
+</div>
+<header class="bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-50">
+<nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+<a class="text-xl sm:text-2xl font-display font-bold text-primary" href="#">LV Glamour</a>
+<div class="hidden md:flex space-x-8 items-center">
+<a class="hover:text-primary transition-colors" href="#products">Products</a>
+<a class="hover:text-primary transition-colors" href="#about">About</a>
+<a class="hover:text-primary transition-colors" href="#testimonials">Testimonials</a>
+<a class="bg-primary text-white px-5 py-2 rounded-full hover:opacity-90 transition-opacity" href="#products">Shop Now</a>
+</div>
+<button id="mobile-menu-btn" class="md:hidden text-zinc-800 dark:text-zinc-200">
+<span class="material-icons">menu</span>
+</button>
+</nav>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 bg-background-light dark:bg-zinc-900 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 md:hidden">
+<div class="p-6">
+<div class="flex justify-between items-center mb-8">
+<span class="text-xl font-display font-bold text-primary">Menu</span>
+<button id="close-menu-btn" class="text-zinc-800 dark:text-zinc-200">
+<span class="material-icons">close</span>
+</button>
+</div>
+<nav class="space-y-6">
+<a onclick="closeMenu()" class="block text-lg text-white hover:text-primary transition-colors" href="#products">Products</a>
+<a onclick="closeMenu()" class="block text-lg text-white hover:text-primary transition-colors" href="#about">About</a>
+<a onclick="closeMenu()" class="block text-lg text-white hover:text-primary transition-colors" href="#testimonials">Testimonials</a>
+<a onclick="closeMenu()" class="block bg-primary text-white px-6 py-3 rounded-full text-center hover:opacity-90 transition-opacity" href="#products">Shop Now</a>
+</nav>
+</div>
+</div>
+<!-- Overlay -->
+<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+</header>
+
+<!-- Product Modal -->
+<div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-2 sm:p-4">
+<div class="bg-white dark:bg-zinc-800 rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md md:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto mx-2 sm:mx-0">
+<div class="p-4 sm:p-6">
+<div class="flex justify-between items-center mb-4 sm:mb-6">
+<h2 id="modal-title" class="text-lg sm:text-2xl font-display font-bold text-zinc-900 dark:text-white"></h2>
+<button onclick="closeProductModal()" class="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">
+<span class="material-icons">close</span>
+</button>
+</div>
+<div id="image-gallery" class="mb-6">
+<img id="modal-image" class="w-full h-48 sm:h-64 object-cover rounded-lg sm:rounded-xl" src="" alt="">
+<div id="image-dots" class="flex justify-center gap-2 mt-3 sm:mt-4 hidden">
+<button onclick="showImage(0)" class="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600 hover:bg-primary transition-colors"></button>
+<button onclick="showImage(1)" class="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600 hover:bg-primary transition-colors"></button>
+<button onclick="showImage(2)" class="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600 hover:bg-primary transition-colors"></button>
+</div>
+</div>
+<div id="modal-content" class="space-y-4 text-zinc-600 dark:text-zinc-300"></div>
+<div id="size-selector" class="hidden mt-4">
+<h4 class="font-semibold text-zinc-900 dark:text-white mb-3">Select Size:</h4>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+<button onclick="selectSize('essential', 20000)" class="size-option p-3 border-2 border-zinc-300 dark:border-zinc-600 rounded-lg text-center hover:border-primary transition-colors">
+<div class="font-semibold text-zinc-900 dark:text-white">Essential</div>
+<div class="text-primary font-bold">₦20,000</div>
+</button>
+<button onclick="selectSize('deluxe', 35000)" class="size-option p-3 border-2 border-zinc-300 dark:border-zinc-600 rounded-lg text-center hover:border-primary transition-colors">
+<div class="font-semibold text-zinc-900 dark:text-white">Deluxe</div>
+<div class="text-primary font-bold">₦35,000</div>
+</button>
+<button onclick="selectSize('premium', 50000)" class="size-option p-3 border-2 border-zinc-300 dark:border-zinc-600 rounded-lg text-center hover:border-primary transition-colors">
+<div class="font-semibold text-zinc-900 dark:text-white">Premium</div>
+<div class="text-primary font-bold">₦50,000</div>
+</button>
+</div>
+</div>
+<div class="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+<button onclick="addToCart()" class="flex-1 bg-primary text-white px-4 sm:px-6 py-3 rounded-lg font-semibold text-sm sm:text-base hover:opacity-90 transition-opacity">Add to Cart</button>
+<button onclick="closeProductModal()" class="px-4 sm:px-6 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg font-semibold text-sm sm:text-base hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide Cart -->
+<div id="slide-cart" class="fixed top-0 right-0 h-full w-96 bg-white dark:bg-zinc-800 shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+<div class="p-6 h-full flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-display font-bold text-zinc-900 dark:text-white">Shopping Cart</h2>
+<button onclick="closeCart()" class="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">
+<span class="material-icons">close</span>
+</button>
+</div>
+<div id="cart-items" class="flex-1 overflow-y-auto space-y-4">
+<p class="text-zinc-500 dark:text-zinc-400 text-center py-8">Your cart is empty</p>
+</div>
+<div class="border-t border-zinc-200 dark:border-zinc-600 pt-4">
+<div class="flex justify-between items-center mb-4">
+<span class="text-lg font-semibold text-zinc-900 dark:text-white">Total:</span>
+<span id="cart-total" class="text-lg font-bold text-primary">$0.00</span>
+</div>
+<button onclick="openCheckout()" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Checkout</button>
+</div>
+</div>
+</div>
+<!-- Cart Overlay -->
+<div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden flex items-center justify-center p-2 sm:p-4">
+<div class="bg-white dark:bg-zinc-800 rounded-xl sm:rounded-2xl w-full max-w-xs sm:max-w-md mx-2 sm:mx-0">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-display font-bold text-zinc-900 dark:text-white">Payment Details</h2>
+<button onclick="closeCheckout()" class="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200">
+<span class="material-icons">close</span>
+</button>
+</div>
+<form id="checkout-form" class="space-y-4">
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Card Number</label>
+<input type="text" placeholder="1234 5678 9012 3456" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" required>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Expiry Date</label>
+<input id="expiry-date" type="text" placeholder="MM/YY" maxlength="5" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" required>
+</div>
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">CVV</label>
+<input type="text" placeholder="123" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" required>
+</div>
+</div>
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Cardholder Name</label>
+<input type="text" placeholder="John" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" required>
+</div>
+<div class="flex gap-4 mt-6">
+<button type="submit" class="flex-1 bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Pay Now</button>
+<button type="button" onclick="closeCheckout()" class="px-6 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">Cancel</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<!-- Success Notification -->
+<div id="success-notification" class="fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-[9999] hidden transform translate-x-full transition-transform duration-300">
+<div class="flex items-center gap-3">
+<span class="material-icons">check_circle</span>
+<div>
+<h3 class="font-semibold">Payment Successful!</h3>
+<p class="text-sm">Your order has been placed successfully.</p>
+</div>
+</div>
+</div>
+
+<!-- Contact Toast Notification -->
+<div id="contact-toast" class="fixed top-4 right-4 bg-blue-500 text-white p-4 rounded-lg shadow-lg z-[9999] hidden transform translate-x-full transition-transform duration-300">
+<div class="flex items-center gap-3">
+<span class="material-icons">send</span>
+<div>
+<h3 class="font-semibold">Message Sent!</h3>
+<p class="text-sm">We'll get back to you soon.</p>
+</div>
+</div>
+</div>
+<main>
+<section class="relative overflow-hidden">
+<div class="container mx-auto px-6 py-24 md:py-32">
+<div class="absolute inset-0 bg-black opacity-40 z-0"></div>
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); filter: blur(4px);"></div>
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+<div class="text-center md:text-left order-2 md:order-1">
+<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-display font-bold text-white text-glow">LV Glamour</h1>
+<p class="text-lg sm:text-xl md:text-2xl mt-4 text-white font-light">.. Aesthetic store</p>
+<p class="text-base sm:text-lg mt-4 text-white/90 max-w-lg mx-auto md:mx-0">Discover handpicked beauty essentials, trendy accessories, and perfect gifts that add glamour to your everyday life.</p>
+<div class="mt-6 md:mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+<a class="bg-primary text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg hover:scale-105 transition-transform" href="#products">
+            Shop Now
+          </a>
+<a class="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg hover:bg-white hover:text-zinc-900 transition-colors" href="#about">
+            Learn More
+          </a>
+</div>
+</div>
+<div class="flex justify-center order-1 md:order-2">
+
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 md:py-28" id="products">
+<div class="container mx-auto px-6">
+<div class="text-center mb-8 md:mb-12 fade-in">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-zinc-900 dark:text-white">Featured Products</h2>
+<p class="mt-4 text-base md:text-lg text-zinc-600 dark:text-zinc-400">Curated with love, just for you.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-white dark:bg-zinc-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+<img alt="Collection of colorful handheld mini fans" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe7I3P4Na6ZAnFoFXjpraoJttlv-NWHqne0eYyaOU8UURkovM22Ma-WhjBGy0Yn5Tl95it02MQaycRbEi0BV-AXKBhz9lI5eSOfv9SSGjUWnyTAX7Aevfc5qeYNBPawuRoUve-BqHOF1wxgSTMOyXrMNqpxgICt28TqI5y6AjjLeInuEX8hfQsgMxGk2U0qc_NYJHQUesJv7erO-xd9MjFXsu8wS04Zq5zLG73GoaJ16xKoONJEztiryvdOV3MdQxes4IMqkljwYI"/>
+<div class="p-6">
+<h3 class="text-xl font-bold font-display text-zinc-900 dark:text-white">Mini Fans</h3>
+<p class="mt-2 text-zinc-600 dark:text-zinc-400">Stay cool and stylish with our vibrant portable fans. Perfect for any occasion.</p>
+<button onclick="openProductModal('mini-fans')" class="mt-4 w-full bg-primary/10 text-primary dark:bg-primary/20 font-semibold py-2 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors">View Details</button>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+<img alt="Assortment of beauty face masks and skin care products" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDOI6nghABuX-coe6ZqeEopEz-aT56Mci9X0otKx7xeHKWV9JDsOgH5mdDtuJZhz0dH3V3SZJuTbhkFZhcUwBrbUqESKSB36iHVb79IAY-kHxshw_AwRwZD-2zJp4sI_R_uReUFzY_JsghTEsGwfWlUgXlAcGPtpI-YXj6GtN2Ewwuou9mNe6COkcYJazHRfp4WIW5wY1I2pUNrXjeSe4HpbSNsZK6UMrG2T6wfKRJWnwyWIDt7t_4TrbvU6rwUouTFjs_W7KghVk"/>
+<div class="p-6">
+<h3 class="text-xl font-bold font-display text-zinc-900 dark:text-white">Beauty Masks</h3>
+<p class="mt-2 text-zinc-600 dark:text-zinc-400">Pamper your skin with our collection of refreshing and nourishing face sheets.</p>
+<button onclick="openProductModal('beauty-masks')" class="mt-4 w-full bg-primary/10 text-primary dark:bg-primary/20 font-semibold py-2 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors">View Details</button>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-800/50 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+<img alt="Luxury gift set with perfumes, chocolates, and other treats" class="w-full h-64 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOOpgWhAeNrvamynExYimYtFhqiuvynZE8fSmUeLY8DNfuKbqASU-JLYFhowJbjlPKbxFB8t7zOkCJbkkRKgZwtSMGJk8tjxf2EQLBsVdYn25tyoDUwqkNSMT8bIn1udZaEo6l_KT01-iTW6lyXVfMFqk0KfAOM7Aqd1GWH_qY9MaJb3AwjGx-z3byMamef0_rI9aN4Hdo3Av7d-llMJKIk9sAB00z_9Kfx2P4A0hTWfw57kofmRlGgMf2Ct_EYEj0e3fXvfA3ZbE"/>
+<div class="p-6">
+<h3 class="text-xl font-bold font-display text-zinc-900 dark:text-white">Gift Sets</h3>
+<p class="mt-2 text-zinc-600 dark:text-zinc-400">The perfect gift box filled with delightful treats for your loved ones.</p>
+<button onclick="openProductModal('gift-sets')" class="mt-4 w-full bg-primary/10 text-primary dark:bg-primary/20 font-semibold py-2 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors">View Details</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-zinc-900 py-20 md:py-28" id="about">
+<div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+<div class="relative slide-left">
+<img alt="Collage of aesthetic products from the store" class="rounded-xl shadow-2xl w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB77CB6Ct8cu2xhDEKYtrsk_eCakLPo8as9tx83U_8jDiivv2H4YgjsfPMqEsOgHCHSg4l14-j8VCF_6C_eb28KhDCQwPMuX6cCUu2szIpRvYf23ML3CwBK0_60HWmO5GhGY1gC7Kjx1IqbNxZqClPxuZfSePblB9B_RYWVpq1m-McbIL-UCXeWfi4U41-NfaXpSybmLVy3pnsa8PI4ct1AYDgjar5UZuAKRv4mqf0zc4OzDObJokVw9WVMFwSqL4qcpummwKGGDI"/>
+<div class="absolute -bottom-4 -right-4 -top-4 -left-4 border-4 border-primary rounded-xl z-[-1]"></div>
+</div>
+<div class="slide-right">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-zinc-900 dark:text-white">About LV Glamour</h2>
+<p class="mt-6 text-lg text-zinc-600 dark:text-zinc-300">
+            Welcome to LV Glamour, your one-stop shop for all things aesthetic and beautiful. We believe in the power of small joys and the magic of a perfect gift. Our store was born from a passion for curating unique, high-quality products that add a touch of glamour to your everyday life.
+          </p>
+<p class="mt-4 text-lg text-zinc-600 dark:text-zinc-300">
+            From skincare essentials that make you glow to charming accessories that complete your look, every item in our collection is handpicked with care and an eye for beauty.
+          </p>
+</div>
+</div>
+</section>
+<section class="py-20 md:py-28" id="testimonials">
+<div class="container mx-auto px-6">
+<div class="text-center mb-8 md:mb-12">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-zinc-900 dark:text-white">What Our Customers Say</h2>
+<p class="mt-4 text-base md:text-lg text-zinc-600 dark:text-zinc-400">We love our community!</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+<div class="bg-white dark:bg-zinc-800/50 p-8 rounded-xl shadow-lg">
+<div class="flex items-center mb-4">
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+</div>
+<p class="text-zinc-600 dark:text-zinc-300">"Absolutely in love with the gift set I bought! The quality is amazing and the packaging was so beautiful. Will definitely be shopping here again."</p>
+<p class="mt-6 font-bold text-zinc-900 dark:text-white">- Jessica<br>
+asaba</br>
+</p>
+</div>
+<div class="bg-white dark:bg-zinc-800/50 p-8 rounded-xl shadow-lg">
+<div class="flex items-center mb-4">
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+</div>
+<p class="text-zinc-600 dark:text-zinc-300">"The mini fan is a lifesaver! It's super cute and works perfectly. I get so many compliments on it. Fast shipping too!"</p>
+<p class="mt-6 font-bold text-zinc-900 dark:text-white">- micheal<br>
+  lagos state</br>
+</p>
+</div>
+<div class="bg-white dark:bg-zinc-800/50 p-8 rounded-xl shadow-lg">
+<div class="flex items-center mb-4">
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star</span>
+<span class="material-icons text-primary">star_half</span>
+</div>
+<p class="text-zinc-600 dark:text-zinc-300">"Such a great selection of aesthetic products. The face masks left my skin feeling incredible. Highly recommend this store."</p>
+<p class="mt-6 font-bold text-zinc-900 dark:text-white">- Amaka <br>
+  delta state</br>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-primary/10 dark:bg-primary/20 py-20" id="contact">
+<div class="container mx-auto px-6 text-center">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-zinc-900 dark:text-white">Ready to Find Your Glamour?</h2>
+<p class="mt-4 text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">Browse our full collection and discover your new favorite aesthetic treasures. Treat yourself or find the perfect gift today.</p>
+<a class="mt-8 inline-block bg-primary text-white px-10 py-4 rounded-full font-semibold text-lg hover:scale-105 hover:shadow-lg transition-all duration-300" href="#products">
+          Shop All Products
+        </a>
+</div>
+</section>
+<section class="bg-white dark:bg-zinc-900 py-20 md:py-28">
+<div class="container mx-auto px-6">
+<div class="text-center mb-8 md:mb-12">
+<h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-zinc-900 dark:text-white">Contact Us</h2>
+<p class="mt-4 text-base md:text-lg text-zinc-600 dark:text-zinc-400">Get in touch with us for any questions or support</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary">phone</span>
+</div>
+<div>
+<h3 class="font-semibold text-zinc-900 dark:text-white">Phone</h3>
+<p class="text-zinc-600 dark:text-zinc-400">08145358771</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary">email</span>
+</div>
+<div>
+<h3 class="font-semibold text-zinc-900 dark:text-white">Email</h3>
+<p class="text-zinc-600 dark:text-zinc-400">support@lvglamour.com</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary">chat</span>
+</div>
+<div>
+<h3 class="font-semibold text-zinc-900 dark:text-white">WhatsApp</h3>
+<p class="text-zinc-600 dark:text-zinc-400">+2348148416397</p>
+</div>
+</div>
+</div>
+<div class="bg-zinc-50 dark:bg-zinc-800 p-6 md:p-8 rounded-2xl">
+<form id="contact-form" class="space-y-4">
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Name</label>
+<input type="text" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" placeholder="Your name">
+</div>
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Email</label>
+<input type="email" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" placeholder="your@email.com">
+</div>
+<div>
+<label class="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Message</label>
+<textarea rows="4" class="w-full p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white" placeholder="Your message..."></textarea>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-zinc-900 text-zinc-300">
+<div class="container mx-auto px-6 py-12">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+<div>
+<h3 class="text-2xl font-display font-bold text-white">LV Glamour</h3>
+<p class="mt-2 text-zinc-400">Your aesthetic store.</p>
+<div class="mt-4 flex space-x-4">
+<a class="hover:text-primary transition-colors" href="#">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg>
+</a>
+<a class="hover:text-primary transition-colors" href="#">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"></path></svg>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-white">Quick Links</h4>
+<ul class="mt-4 space-y-2">
+<li><a class="hover:text-primary transition-colors" href="#products">Products</a></li>
+<li><a class="hover:text-primary transition-colors" href="#about">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#contact">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white">Support</h4>
+<ul class="mt-4 space-y-2">
+<li><a class="hover:text-primary transition-colors" href="#">FAQ</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white">Contact Us</h4>
+<ul class="mt-4 space-y-2">
+<li class="flex items-center">
+<span class="material-icons mr-2 text-primary text-base">phone</span>
+              08145358771
+            </li>
+<li class="flex items-center">
+<span class="material-icons mr-2 text-primary text-base">email</span>
+              support@lvglamour.com
+            </li>
+</ul>
+</div>
+</div>
+<div class="mt-12 border-t border-zinc-700 pt-8 text-center text-zinc-400">
+<p>© 2025 LV Glamour Aesthetic Store. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+
+<script>
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeMenuBtn = document.getElementById('close-menu-btn');
+const menuOverlay = document.getElementById('menu-overlay');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('translate-x-full');
+  menuOverlay.classList.remove('hidden');
+});
+
+closeMenuBtn.addEventListener('click', closeMenu);
+
+function closeMenu() {
+  mobileMenu.classList.add('translate-x-full');
+  menuOverlay.classList.add('hidden');
+}
+
+menuOverlay.addEventListener('click', () => {
+  mobileMenu.classList.add('translate-x-full');
+  menuOverlay.classList.add('hidden');
+});
+
+// Product Modal Functions
+const productData = {
+  'mini-fans': {
+    title: 'Mini Fans Collection',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAe7I3P4Na6ZAnFoFXjpraoJttlv-NWHqne0eYyaOU8UURkovM22Ma-WhjBGy0Yn5Tl95it02MQaycRbEi0BV-AXKBhz9lI5eSOfv9SSGjUWnyTAX7Aevfc5qeYNBPawuRoUve-BqHOF1wxgSTMOyXrMNqpxgICt28TqI5y6AjjLeInuEX8hfQsgMxGk2U0qc_NYJHQUesJv7erO-xd9MjFXsu8wS04Zq5zLG73GoaJ16xKoONJEztiryvdOV3MdQxes4IMqkljwYI',
+    price: 12500,
+    content: `
+      <p><strong>Stay Cool in Style!</strong></p>
+      <p>Our premium mini fans combine functionality with fashion. Available in 6 vibrant colors including rose gold, mint green, and classic white.</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li>3-speed settings for customized comfort</li>
+        <li>USB rechargeable with 4-hour battery life</li>
+        <li>Compact design fits in any purse or pocket</li>
+        <li>Whisper-quiet operation</li>
+        <li>LED indicator for battery status</li>
+      </ul>
+      <p class="font-semibold text-primary">Price: ₦12,500</p>
+    `
+  },
+  'beauty-masks': {
+    title: 'Beauty Face Masks',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCDOI6nghABuX-coe6ZqeEopEz-aT56Mci9X0otKx7xeHKWV9JDsOgH5mdDtuJZhz0dH3V3SZJuTbhkFZhcUwBrbUqESKSB36iHVb79IAY-kHxshw_AwRwZD-2zJp4sI_R_uReUFzY_JsghTEsGwfWlUgXlAcGPtpI-YXj6GtN2Ewwuou9mNe6COkcYJazHRfp4WIW5wY1I2pUNrXjeSe4HpbSNsZK6UMrG2T6wfKRJWnwyWIDt7t_4TrbvU6rwUouTFjs_W7KghVk',
+    price: 10000,
+    content: `
+      <p><strong>Pamper Your Skin!</strong></p>
+      <p>Transform your skincare routine with our luxurious face mask collection. Each pack contains 5 different mask types for complete skin care.</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Hydrating Hyaluronic Acid Mask</li>
+        <li>Brightening Vitamin C Mask</li>
+        <li>Purifying Charcoal Mask</li>
+        <li>Anti-aging Collagen Mask</li>
+        <li>Soothing Aloe Vera Mask</li>
+      </ul>
+      <p>Made with natural ingredients, suitable for all skin types. Dermatologist tested and cruelty-free.</p>
+      <p class="font-semibold text-primary">Price: ₦10,000</p>
+    `
+  },
+  'gift-sets': {
+    title: 'Luxury Gift Sets',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDOOpgWhAeNrvamynExYimYtFhqiuvynZE8fSmUeLY8DNfuKbqASU-JLYFhowJbjlPKbxFB8t7zOkCJbkkRKgZwtSMGJk8tjxf2EQLBsVdYn25tyoDUwqkNSMT8bIn1udZaEo6l_KT01-iTW6lyXVfMFqk0KfAOM7Aqd1GWH_qY9MaJb3AwjGx-z3byMamef0_rI9aN4Hdo3Av7d-llMJKIk9sAB00z_9Kfx2P4A0hTWfw57kofmRlGgMf2Ct_EYEj0e3fXvfA3ZbE',
+    images: [
+      'https://m.media-amazon.com/images/I/81kOB7Ryv4L.jpg',
+      'https://homafy.com/wp-content/uploads/2021/12/Dark-Pink-gift-set-for-women-1024x1024.jpeg',
+      'https://tazgiftshop.co.ke/wp-content/uploads/2024/06/mini-gift-set-1.jpg'
+    ],
+    price: 20000,
+    content: `
+      <p><strong>The Perfect Gift!</strong></p>
+      <p>Curated gift boxes that bring joy to your loved ones. Each set is beautifully packaged and ready to gift.</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Premium skincare essentials</li>
+        <li>Artisan chocolates and treats</li>
+        <li>Scented candles and aromatherapy items</li>
+        <li>Elegant accessories and jewelry</li>
+        <li>Personalized greeting card included</li>
+      </ul>
+      <p>Available in 3 sizes: Essential (₦20,000), Deluxe (₦35,000), and Premium (₦50,000).</p>
+      <p class="font-semibold text-primary">Starting from: ₦20,000</p>
+    `
+  }
+};
+
+let cart = [];
+let currentProduct = null;
+let currentImageIndex = 0;
+let selectedSize = 'essential';
+let selectedPrice = 20000;
+
+function openProductModal(productId) {
+  const product = productData[productId];
+  currentProduct = {
+    id: productId,
+    title: product.title,
+    image: product.image,
+    price: product.price
+  };
+  
+  document.getElementById('modal-title').textContent = product.title;
+  document.getElementById('modal-content').innerHTML = product.content;
+  
+  if (productId === 'gift-sets') {
+    document.getElementById('image-dots').classList.remove('hidden');
+    document.getElementById('size-selector').classList.remove('hidden');
+    currentImageIndex = 0;
+    selectedSize = 'essential';
+    selectedPrice = 20000;
+    document.getElementById('modal-image').src = product.images[0];
+    
+    // Reset dots
+    const dots = document.querySelectorAll('#image-dots button');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('bg-primary', i === 0);
+      dot.classList.toggle('bg-zinc-300', i !== 0);
+    });
+    
+    // Reset size selection
+    const options = document.querySelectorAll('.size-option');
+    options.forEach((option, i) => {
+      option.classList.toggle('border-primary', i === 0);
+      option.classList.toggle('bg-primary/10', i === 0);
+      option.classList.toggle('border-zinc-300', i !== 0);
+    });
+  } else {
+    document.getElementById('image-dots').classList.add('hidden');
+    document.getElementById('size-selector').classList.add('hidden');
+    document.getElementById('modal-image').src = product.image;
+  }
+  
+  document.getElementById('product-modal').classList.remove('hidden');
+}
+
+function closeProductModal() {
+  document.getElementById('product-modal').classList.add('hidden');
+}
+
+function addToCart() {
+  if (currentProduct) {
+    const productToAdd = {
+      ...currentProduct,
+      price: currentProduct.id === 'gift-sets' ? selectedPrice : currentProduct.price,
+      size: currentProduct.id === 'gift-sets' ? selectedSize : null,
+      id: currentProduct.id === 'gift-sets' ? `${currentProduct.id}-${selectedSize}` : currentProduct.id
+    };
+    
+    const existingItem = cart.find(item => item.id === productToAdd.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({...productToAdd, quantity: 1});
+    }
+    updateCartDisplay();
+    closeProductModal();
+    openCart();
+  }
+}
+
+function showImage(index) {
+  const product = productData['gift-sets'];
+  document.getElementById('modal-image').src = product.images[index];
+  currentImageIndex = index;
+  
+  const dots = document.querySelectorAll('#image-dots button');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('bg-primary', i === index);
+    dot.classList.toggle('bg-zinc-300', i !== index);
+    dot.classList.toggle('dark:bg-zinc-600', i !== index);
+  });
+}
+
+function selectSize(size, price) {
+  selectedSize = size;
+  selectedPrice = price;
+  
+  const options = document.querySelectorAll('.size-option');
+  options.forEach(option => {
+    option.classList.remove('border-primary', 'bg-primary/10');
+    option.classList.add('border-zinc-300');
+  });
+  
+  if (event && event.target) {
+    event.target.closest('.size-option').classList.add('border-primary', 'bg-primary/10');
+    event.target.closest('.size-option').classList.remove('border-zinc-300');
+  }
+}
+
+function openCart() {
+  document.getElementById('slide-cart').classList.remove('translate-x-full');
+  document.getElementById('cart-overlay').classList.remove('hidden');
+}
+
+function closeCart() {
+  document.getElementById('slide-cart').classList.add('translate-x-full');
+  document.getElementById('cart-overlay').classList.add('hidden');
+}
+
+function updateCartDisplay() {
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p class="text-zinc-500 dark:text-zinc-400 text-center py-8">Your cart is empty</p>';
+    cartTotal.textContent = '₦0';
+    return;
+  }
+  
+  let total = 0;
+  cartItems.innerHTML = cart.map(item => {
+    total += item.price * item.quantity;
+    return `
+      <div class="flex items-center gap-4 p-4 bg-zinc-50 dark:bg-zinc-700 rounded-lg">
+        <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded">
+        <div class="flex-1">
+          <h3 class="font-semibold text-zinc-900 dark:text-white">${item.title}</h3>
+          <p class="text-primary font-bold">₦${item.price.toLocaleString()}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="updateQuantity('${item.id}', -1)" class="w-8 h-8 bg-zinc-200 dark:bg-zinc-600 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-500">-</button>
+          <span class="w-8 text-center font-semibold text-zinc-900 dark:text-white">${item.quantity}</span>
+          <button onclick="updateQuantity('${item.id}', 1)" class="w-8 h-8 bg-zinc-200 dark:bg-zinc-600 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-500">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  cartTotal.textContent = `₦${total.toLocaleString()}`;
+}
+
+function updateQuantity(productId, change) {
+  const item = cart.find(item => item.id === productId);
+  if (item) {
+    item.quantity += change;
+    if (item.quantity <= 0) {
+      cart = cart.filter(item => item.id !== productId);
+    }
+    updateCartDisplay();
+  }
+}
+
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+function openCheckout() {
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+  closeCart();
+  document.getElementById('checkout-modal').classList.remove('hidden');
+}
+
+function closeCheckout() {
+  document.getElementById('checkout-modal').classList.add('hidden');
+}
+
+function showSuccessNotification() {
+  const notification = document.getElementById('success-notification');
+  notification.classList.remove('hidden', 'translate-x-full');
+  
+  setTimeout(() => {
+    notification.classList.add('translate-x-full');
+    setTimeout(() => {
+      notification.classList.add('hidden');
+      redirectToWhatsApp();
+    }, 300);
+  }, 3000);
+}
+
+function redirectToWhatsApp() {
+  const orderItems = cart.map(item => {
+    const size = item.size ? ` (${item.size})` : '';
+    return `${item.quantity}x ${item.title}${size} - ₦${item.price.toLocaleString()}`;
+  }).join('\n');
+  
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  
+  const message = `Hello! I just placed an order on LV Glamour:\n\n${orderItems}\n\nTotal: ₦${total.toLocaleString()}\n\nPayment has been completed successfully. Thank you!`;
+  
+  const whatsappUrl = `https://wa.me/2348148416397?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+function showContactToast() {
+  const toast = document.getElementById('contact-toast');
+  toast.classList.remove('hidden', 'translate-x-full');
+  
+  setTimeout(() => {
+    toast.classList.add('translate-x-full');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 300);
+  }, 3000);
+}
+
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Reset form
+  this.reset();
+  
+  // Show toast notification
+  showContactToast();
+});
+
+// Auto-format expiry date
+document.getElementById('expiry-date').addEventListener('input', function(e) {
+  let value = e.target.value.replace(/\D/g, '');
+  if (value.length >= 2) {
+    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+  }
+  e.target.value = value;
+});
+
+// Scroll Animation Observer
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all animation elements
+// Website Loader Animation
+function startLoader() {
+  const letters = document.querySelectorAll('.letter');
+  const progress = document.getElementById('loader-progress');
+  const loader = document.getElementById('website-loader');
+  
+  let currentLetter = 0;
+  
+  function animateLetter() {
+    if (currentLetter < letters.length) {
+      letters[currentLetter].classList.add('visible');
+      progress.style.width = `${((currentLetter + 1) / letters.length) * 100}%`;
+      currentLetter++;
+      setTimeout(animateLetter, 200);
+    } else {
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          loader.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }, 500);
+      }, 800);
+    }
+  }
+  
+  document.body.style.overflow = 'hidden';
+  setTimeout(animateLetter, 500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  startLoader();
+  const animatedElements = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
+  animatedElements.forEach(el => observer.observe(el));
+  
+  // Add fade-in class to product cards
+  const productCards = document.querySelectorAll('#products .bg-white');
+  productCards.forEach(card => {
+    card.classList.add('fade-in');
+    observer.observe(card);
+  });
+  
+  // Add fade-in class to testimonial cards
+  const testimonialCards = document.querySelectorAll('#testimonials .bg-white');
+  testimonialCards.forEach(card => {
+    card.classList.add('fade-in');
+    observer.observe(card);
+  });
+});
+
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Store cart items before clearing
+  const orderItems = [...cart];
+  
+  // Simulate payment processing
+  setTimeout(() => {
+    closeCheckout();
+    closeCart();
+    
+    // Show success notification with current cart
+    showSuccessNotification();
+    
+    // Clear cart after notification
+    setTimeout(() => {
+      cart = [];
+      updateCartDisplay();
+    }, 3500);
+  }, 1000);
+});
+</script>
+</body></html>
